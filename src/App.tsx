@@ -1,27 +1,19 @@
 import React from "react";
-import Api, { resultType } from "./api";
 import "./App.css";
-
-const withDebounce = (
-  callback: (...args: unknown[]) => Promise<void>,
-  wait: number
-) => {
-  let timeoutID: ReturnType<typeof setTimeout>;
-
-  return (...args: unknown[]) => {
-    if (timeoutID) clearTimeout(timeoutID);
-    timeoutID = setTimeout(() => callback(...args), wait);
-  };
-};
+import Api, { resultType } from "./api";
+import { withDebounce } from "./utils/debounce";
+import { handleSetTime } from "./helper/handleSetTime";
+import { Line } from "rc-progress";
 
 const App = (): JSX.Element => {
   const [result, setResult] = React.useState<resultType>({
     message: "",
     status: "",
   });
+  const [time, setTime] = React.useState(0);
 
   const getRandomDogs = async () => {
-    console.log("API Call");
+    console.log("API call occured");
     try {
       const result = await Api.fetchRandomDogs();
       setResult(result);
@@ -30,7 +22,10 @@ const App = (): JSX.Element => {
     }
   };
 
-  const getRandomDogsWithDebounce = withDebounce(getRandomDogs, 500);
+  const handleOnChange = () => {
+    withDebounce(getRandomDogs, 500);
+    handleSetTime(setTime, 500);
+  };
 
   return (
     <div className="App">
@@ -41,14 +36,23 @@ const App = (): JSX.Element => {
         <br />
         it makes next api call only after 500ms
       </div>
+      <div className="progress-bar">
+        <Line
+          percent={(time / 500) * 100}
+          strokeWidth={4}
+          strokeColor="#32CD32"
+        />
+        <span>percent: {(time / 500) * 100}</span>
+        <br />
+        <span>currentTime: {time}ms</span>
+      </div>
       <input
         type="text"
         placeholder="type to search..."
-        onChange={getRandomDogsWithDebounce}
+        onChange={handleOnChange}
       />
-      <div className="result">
-        Result: {JSON.stringify(result)}
-      </div>
+      <div className="result">Result: {JSON.stringify(result)}</div>
+
       <div className="image">
         {result.message && <img width="200" alt="dog" src={result.message} />}
       </div>

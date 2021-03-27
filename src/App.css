@@ -1,10 +1,19 @@
 .App {
   text-align: center;
+  margin-top: 30px;
+  color: limegreen;
+  height: 100vh;
 }
 
-div {
+.progress-bar,
+.result {
+  margin: 20px 0;
+}
+
+.app div {
   margin: 20px;
 }
+
 input {
   padding: 10px;
 }
