@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Api from "./api";
+import "./App.css";
 
-function App() {
+const App = (): JSX.Element => {
+  const [result, setResult] = React.useState("Empty");
+
+  const getRandomDogs = async () => {
+    try {
+      const result = await Api.fetchRandomDogs();
+      setResult(JSON.stringify(result, null, "\t"));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  console.log("result", result);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="text"
+        placeholder="type to search..."
+        onChange={getRandomDogs}
+      />
+      <div className="result">Result: {result}</div>
     </div>
   );
-}
+};
 
 export default App;
