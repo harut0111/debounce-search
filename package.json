@@ -1,4 +1,5 @@
 {
+  "homepage": "http://harut0111.github.io/debounce-search",
   "name": "debounce-search",
   "version": "0.1.0",
   "private": true,
@@ -22,6 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "prettify": "prettier --write ."
   },
@@ -49,6 +52,7 @@
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-react": "^7.23.1",
+    "gh-pages": "^3.1.0",
     "prettier": "2.2.1"
   }
 }
