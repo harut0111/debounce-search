@@ -35,7 +35,7 @@ const App = (): JSX.Element => {
   return (
     <div className="App">
       <div>
-        <b>this case wait time is 500ms...</b>
+        <b>in this case wait time is 500ms...</b>
         <br />
         open console to see when api call occured
         <br />
@@ -47,7 +47,7 @@ const App = (): JSX.Element => {
         onChange={getRandomDogsWithDebounce}
       />
       <div className="result">
-        Result: {result ? JSON.stringify(result) : "Empty"}
+        Result: {JSON.stringify(result)}
       </div>
       <div className="image">
         {result.message && <img width="200" alt="dog" src={result.message} />}

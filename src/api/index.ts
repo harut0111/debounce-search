@@ -1,6 +1,6 @@
 export interface resultType {
   message: string;
-  status: string
+  status: string;
 }
 
 export default class Api {
