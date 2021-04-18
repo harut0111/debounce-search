@@ -1,9 +1,11 @@
 import React from "react";
 import "./App.css";
 import Api, { resultType } from "./api";
-import { withDebounce } from "./utils/debounce";
+import Debounce from "./utils/debounce";
 import { handleSetTime } from "./helper/handleSetTime";
 import { Line } from "rc-progress";
+
+const debounce = new Debounce();
 
 const App = (): JSX.Element => {
   const [result, setResult] = React.useState<resultType>({
@@ -13,7 +15,7 @@ const App = (): JSX.Element => {
   const [time, setTime] = React.useState(0);
 
   const getRandomDogs = async () => {
-    console.log("API call occured");
+    console.log("API call occurred");
     try {
       const result = await Api.fetchRandomDogs();
       setResult(result);
@@ -23,7 +25,7 @@ const App = (): JSX.Element => {
   };
 
   const handleOnChange = () => {
-    withDebounce(getRandomDogs, 500);
+    debounce.wrapper(getRandomDogs, 500);
     handleSetTime(setTime, 500);
   };
 
@@ -32,7 +34,7 @@ const App = (): JSX.Element => {
       <div>
         <b>in this case wait time is 500ms...</b>
         <br />
-        open console to see when api call occured
+        open console to see when api call occurred
         <br />
         it makes next api call only after 500ms
       </div>
